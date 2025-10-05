@@ -1542,4 +1542,276 @@ footer {
     .support-options {
         grid-template-columns: 1fr;
     }
+
+}
+
+/* ==================== RESPONSIVIDADE DO LOGIN ==================== */
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium));
+}
+
+.auth-container-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+}
+
+.auth-container {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* Header responsivo */
+.auth-page header {
+    background-color: transparent;
+    box-shadow: none;
+    position: relative;
+}
+
+.auth-page .header-content {
+    padding: 15px 0;
+}
+
+.auth-page .logo {
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.auth-page nav ul li a {
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.auth-page nav ul li a.active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Formulário responsivo */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-medium);
+    box-shadow: 0 0 0 3px rgba(16, 68, 114, 0.1);
+}
+
+/* Opções do formulário responsivas */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.forgot-password {
+    color: var(--primary-medium);
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+/* Botões responsivos */
+.btn-full {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    min-height: 50px;
+}
+
+/* Divisor */
+.auth-divider {
+    text-align: center;
+    position: relative;
+    margin: 10px 0;
+}
+
+.auth-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: #e9ecef;
+}
+
+.auth-divider span {
+    background-color: white;
+    padding: 0 15px;
+    color: var(--gray-medium);
+    font-size: 14px;
+}
+
+/* Footer do auth */
+.auth-page footer {
+    background-color: transparent;
+    color: white;
+    padding: 20px 0;
+}
+
+.auth-page .copyright {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ==================== MEDIA QUERIES ESPECÍFICAS ==================== */
+
+/* Tablets */
+@media (max-width: 768px) {
+    .auth-container {
+        padding: 25px;
+        margin: 20px;
+    }
+    
+    .auth-header h1 {
+        font-size: 24px;
+    }
+    
+    .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .auth-page nav ul {
+        gap: 10px;
+    }
+    
+    .auth-page nav ul li {
+        margin-left: 10px;
+    }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+    .auth-container-wrapper {
+        padding: 10px;
+        align-items: flex-start;
+        padding-top: 40px;
+    }
+    
+    .auth-container {
+        padding: 20px;
+        margin: 10px;
+        border-radius: 10px;
+    }
+    
+    .auth-header h1 {
+        font-size: 22px;
+    }
+    
+    .auth-header p {
+        font-size: 14px;
+    }
+    
+    .form-group input {
+        padding: 12px;
+        font-size: 16px; /* Importante para iOS */
+    }
+    
+    .btn-full {
+        padding: 12px;
+        min-height: 44px; /* Tamanho mínimo para toque */
+    }
+    
+    /* Header mobile */
+    .auth-page .header-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .auth-page nav ul {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .auth-page nav ul li {
+        margin: 0 5px;
+    }
+    
+    .auth-page nav ul li a {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+}
+
+/* Celulares muito pequenos */
+@media (max-width: 360px) {
+    .auth-container {
+        padding: 15px;
+        margin: 5px;
+    }
+    
+    .auth-header h1 {
+        font-size: 20px;
+    }
+    
+    .form-group input {
+        padding: 10px;
+    }
+    
+    .auth-page nav ul {
+        gap: 5px;
+    }
+    
+    .auth-page nav ul li a {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+}
+
+/* Orientação paisagem em celulares */
+@media (max-height: 500px) and (orientation: landscape) {
+    .auth-container-wrapper {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    
+    .auth-container {
+        padding: 20px;
+    }
+    
+    .auth-form {
+        gap: 15px;
+    }
+    
+    .form-group input {
+        padding: 10px 12px;
+    }
 }
