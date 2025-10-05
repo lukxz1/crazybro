@@ -1815,3 +1815,122 @@ footer {
         padding: 10px 12px;
     }
 }
+
+/* ==================== CORREÇÃO DO CENTRALIZAMENTO ==================== */
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium));
+    margin: 0;
+    padding: 0;
+}
+
+.auth-container-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+    min-height: calc(100vh - 140px); /* Altura total menos header/footer */
+}
+
+.auth-container {
+    background: white;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* Header transparente no auth */
+.auth-page header {
+    background-color: transparent;
+    box-shadow: none;
+    position: relative;
+    width: 100%;
+}
+
+.auth-page .header-content {
+    padding: 15px 0;
+}
+
+.auth-page .logo {
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.auth-page nav ul li a {
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.auth-page nav ul li a.active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Footer transparente no auth */
+.auth-page footer {
+    background-color: transparent;
+    color: white;
+    padding: 20px 0;
+    width: 100%;
+}
+
+.auth-page .copyright {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ==================== MEDIA QUERIES CORRIGIDAS ==================== */
+
+/* Tablets */
+@media (max-width: 768px) {
+    .auth-container-wrapper {
+        padding: 20px;
+        min-height: calc(100vh - 120px);
+    }
+    
+    .auth-container {
+        padding: 30px;
+        margin: 0 auto;
+    }
+}
+
+/* Celulares */
+@media (max-width: 480px) {
+    .auth-container-wrapper {
+        padding: 15px;
+        min-height: calc(100vh - 110px);
+        align-items: center; /* Garante centralização */
+    }
+    
+    .auth-container {
+        padding: 25px;
+        margin: 0 auto;
+        width: 100%;
+    }
+    
+    .auth-header h1 {
+        font-size: 22px;
+        text-align: center;
+    }
+    
+    .auth-header p {
+        text-align: center;
+    }
+}
+
+/* Celulares muito pequenos */
+@media (max-width: 360px) {
+    .auth-container-wrapper {
+        padding: 10px;
+    }
+    
+    .auth-container {
+        padding: 20px;
+    }
+}
