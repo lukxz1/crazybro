@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Pedidos - Crazy Bro</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">CRAZY BRO</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="produtos.html">Produtos</a></li>
+                    <li><a href="pedidos.html" class="active">Meus Pedidos</a></li>
+                    <li><a href="historico.html">Histórico</a></li>
+                    <li><a href="carrinho.html">Carrinho (<span id="cart-count">0</span>)</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="orders-page">
+        <div class="container">
+            <div class="page-header">
+                <h1>Acompanhe Seus Pedidos</h1>
+                <p>Acompanhe o status de suas compras em tempo real</p>
+            </div>
+
+            <div class="orders-container">
+                <!-- Pedido Ativo -->
+                <div class="order-card active">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <h3>Pedido #CB23001</h3>
+                            <span class="order-date">Feito em: 15/12/2023</span>
+                        </div>
+                        <div class="order-status status-processing">
+                            Em Processamento
+                        </div>
+                    </div>
+
+                    <div class="order-timeline">
+                        <div class="timeline-step completed">
+                            <div class="step-icon">✅</div>
+                            <div class="step-info">
+                                <span class="step-title">Pedido Confirmado</span>
+                                <span class="step-date">15/12 - 14:30</span>
+                            </div>
+                        </div>
+                        <div class="timeline-step completed">
+                            <div class="step-icon">📦</div>
+                            <div class="step-info">
+                                <span class="step-title">Preparando Envio</span>
+                                <span class="step-date">16/12 - 09:15</span>
+                            </div>
+                        </div>
+                        <div class="timeline-step active">
+                            <div class="step-icon">🚚</div>
+                            <div class="step-info">
+                                <span class="step-title">Em Trânsito</span>
+                                <span class="step-date">Previsão: 18/12</span>
+                            </div>
+                        </div>
+                        <div class="timeline-step">
+                            <div class="step-icon">🏠</div>
+                            <div class="step-info">
+                                <span class="step-title">Entregue</span>
+                                <span class="step-date">Aguardando</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-items">
+                        <h4>Itens do Pedido</h4>
+                        <div class="order-item">
+                            <div class="item-image">
+                                <span>Calça</span>
+                            </div>
+                            <div class="item-details">
+                                <span class="item-name">Calça Cargo Preta</span>
+                                <span class="item-quantity">Quantidade: 1</span>
+                            </div>
+                            <div class="item-price">R$ 129,90</div>
+                        </div>
+                        <div class="order-item">
+                            <div class="item-image">
+                                <span>Camiseta</span>
+                            </div>
+                            <div class="item-details">
+                                <span class="item-name">Camiseta Básica Branca</span>
+                                <span class="item-quantity">Quantidade: 2</span>
+                            </div>
+                            <div class="item-price">R$ 99,80</div>
+                        </div>
+                    </div>
+
+                    <div class="order-summary">
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span>R$ 229,70</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Frete:</span>
+                            <span>R$ 15,00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span>R$ 244,70</span>
+                        </div>
+                    </div>
+
+                    <div class="order-actions">
+                        <button class="btn btn-outline" onclick="cancelOrder('CB23001')">
+                            Cancelar Pedido
+                        </button>
+                        <button class="btn btn-primary" onclick="contactSupport()">
+                            Falar com Atendimento
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pedido Entregue Recentemente -->
+                <div class="order-card delivered">
+                    <div class="order-header">
+                        <div class="order-info">
+                            <h3>Pedido #CB22115</h3>
+                            <span class="order-date">Entregue em: 10/12/2023</span>
+                        </div>
+                        <div class="order-status status-delivered">
+                            Entregue
+                        </div>
+                    </div>
+
+                    <div class="order-items">
+                        <h4>Itens do Pedido</h4>
+                        <div class="order-item">
+                            <div class="item-image">
+                                <span>Jaqueta</span>
+                            </div>
+                            <div class="item-details">
+                                <span class="item-name">Jaqueta Jeans Destroyed</span>
+                                <span class="item-quantity">Quantidade: 1</span>
+                            </div>
+                            <div class="item-price">R$ 189,90</div>
+                        </div>
+                    </div>
+
+                    <div class="order-actions">
+                        <button class="btn btn-outline" onclick="buyAgain('CB22115')">
+                            Comprar Novamente
+                        </button>
+                        <button class="btn btn-secondary" onclick="rateOrder('CB22115')">
+                            Avaliar Pedido
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="support-info">
+                <h3>Precisa de Ajuda?</h3>
+                <div class="support-options">
+                    <div class="support-option">
+                        <span class="option-icon">📞</span>
+                        <div>
+                            <strong>Telefone</strong>
+                            <p>(99) 98126-0332</p>
+                        </div>
+                    </div>
+                    <div class="support-option">
+                        <span class="option-icon">💬</span>
+                        <div>
+                            <strong>WhatsApp</strong>
+                            <p>(99) 98126-0332</p>
+                        </div>
+                    </div>
+                    <div class="support-option">
+                        <span class="option-icon">✉️</span>
+                        <div>
+                            <strong>E-mail</strong>
+                            <p>suporte@crazybro.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>CRAZY BRO</h3>
+                    <p>Sua loja de moda preferida</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Atendimento</h3>
+                    <ul>
+                        <li>Seg a Sex: 9h às 18h</li>
+                        <li>Sábado: 9h às 13h</li>
+                        <li>suporte@crazybro.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Crazy Bro. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Funções específicas para a página de pedidos
+        function cancelOrder(orderId) {
+            if (confirm('Tem certeza que deseja cancelar este pedido?')) {
+                showNotification(`Pedido ${orderId} cancelado com sucesso!`, 'success');
+                // Aqui iria a lógica real de cancelamento
+            }
+        }
+
+        function contactSupport() {
+            showNotification('Redirecionando para o atendimento...', 'success');
+            // Aqui iria o redirecionamento para WhatsApp/Telefone
+        }
+
+        function buyAgain(orderId) {
+            showNotification('Itens do pedido adicionados ao carrinho!', 'success');
+            // Aqui iria a lógica de adicionar itens ao carrinho
+        }
+
+        function rateOrder(orderId) {
+            const rating = prompt('De 1 a 5 estrelas, como você avalia este pedido?');
+            if (rating && rating >= 1 && rating <= 5) {
+                showNotification(`Obrigado pela avaliação de ${rating} estrelas!`, 'success');
+            }
+        }
+
+        // Atualizar contador do carrinho
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>

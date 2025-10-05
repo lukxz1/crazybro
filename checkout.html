@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Crazy Bro</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">CRAZY BRO</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="produtos.html">Produtos</a></li>
+                    <li><a href="carrinho.html">Carrinho (<span id="cart-count">0</span>)</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="checkout-page">
+        <div class="container">
+            <div class="checkout-header">
+                <h1>Finalizar Compra</h1>
+                <div class="checkout-steps">
+                    <div class="step active">1. Entrega</div>
+                    <div class="step">2. Pagamento</div>
+                    <div class="step">3. Confirmação</div>
+                </div>
+            </div>
+
+            <div class="checkout-container">
+                <div class="checkout-form">
+                    <form id="checkout-form">
+                        <div class="form-section">
+                            <h3>Informações de Entrega</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">Nome</label>
+                                    <input type="text" id="firstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Sobrenome</label>
+                                    <input type="text" id="lastName" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">E-mail</label>
+                                <input type="email" id="email" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Telefone</label>
+                                <input type="tel" id="phone" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="address">Endereço</label>
+                                <input type="text" id="address" required>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city">Cidade</label>
+                                    <input type="text" id="city" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="state">Estado</label>
+                                    <select id="state" required>
+                                        <option value="">Selecione</option>
+                                        <option value="SP">São Paulo</option>
+                                        <option value="RJ">Rio de Janeiro</option>
+                                        <option value="MG">Minas Gerais</option>
+                                        <option value="MG">Maranhão</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="zipCode">CEP</label>
+                                    <input type="text" id="zipCode" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Método de Entrega</h3>
+                            <div class="shipping-options">
+                                <label class="shipping-option">
+                                    <input type="radio" name="shipping" value="standard" checked>
+                                    <div class="option-content">
+                                        <span class="option-title">Entrega Padrão</span>
+                                        <span class="option-description">5-7 dias úteis</span>
+                                        <span class="option-price">R$ 15,00</span>
+                                    </div>
+                                </label>
+                                <label class="shipping-option">
+                                    <input type="radio" name="shipping" value="express">
+                                    <div class="option-content">
+                                        <span class="option-title">Entrega Expressa</span>
+                                        <span class="option-description">2-3 dias úteis</span>
+                                        <span class="option-price">R$ 25,00</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="checkout-actions">
+                            <a href="carrinho.html" class="btn btn-secondary">Voltar ao Carrinho</a>
+                            <button type="submit" class="btn btn-primary">Continuar para Pagamento</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="order-summary">
+                    <h3>Resumo do Pedido</h3>
+                    <div class="order-items" id="order-items">
+                        <!-- Itens do pedido carregados via JavaScript -->
+                    </div>
+                    <div class="summary-totals">
+                        <div class="summary-item">
+                            <span>Subtotal</span>
+                            <span id="order-subtotal">R$ 0,00</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Frete</span>
+                            <span id="order-shipping">R$ 15,00</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Desconto</span>
+                            <span id="order-discount">- R$ 0,00</span>
+                        </div>
+                        <div class="summary-total">
+                            <span>Total</span>
+                            <span id="order-total">R$ 15,00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="copyright">
+                <p>&copy; 2023 Crazy Bro. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOrderSummary();
+            updateCartCount();
+            setupCheckoutForm();
+        });
+
+        function loadOrderSummary() {
+            const orderItems = document.getElementById('order-items');
+            const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            orderItems.innerHTML = '';
+            let subtotal = 0;
+            
+            savedCart.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'order-item';
+                itemElement.innerHTML = `
+                    <div class="order-item-info">
+                        <span class="order-item-name">${item.name}</span>
+                        <span class="order-item-quantity">Qtd: ${item.quantity}</span>
+                    </div>
+                    <span class="order-item-price">R$ ${(item.price * item.quantity).toFixed(2)}</span>
+                `;
+                orderItems.appendChild(itemElement);
+                
+                subtotal += item.price * item.quantity;
+            });
+            
+            document.getElementById('order-subtotal').textContent = `R$ ${subtotal.toFixed(2)}`;
+            document.getElementById('order-total').textContent = `R$ ${(subtotal + 15).toFixed(2)}`;
+        }
+
+        function setupCheckoutForm() {
+            document.getElementById('checkout-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simulação de processamento
+                showNotification('Pedido processado com sucesso!', 'success');
+                
+                // Limpar carrinho
+                localStorage.removeItem('cart');
+                
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+            });
+
+            // Atualizar frete quando mudar opção
+            document.querySelectorAll('input[name="shipping"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const shippingPrice = this.value === 'express' ? 25 : 15;
+                    document.getElementById('order-shipping').textContent = `R$ ${shippingPrice.toFixed(2)}`;
+                    
+                    const subtotal = parseFloat(document.getElementById('order-subtotal').textContent.replace('R$ ', '').replace(',', '.'));
+                    document.getElementById('order-total').textContent = `R$ ${(subtotal + shippingPrice).toFixed(2)}`;
+                });
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho - Crazy Bro</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">CRAZY BRO</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="produtos.html">Produtos</a></li>
+                    <li><a href="login.html">Entrar</a></li>
+                    <li><a href="carrinho.html" class="active">Carrinho (<span id="cart-count">0</span>)</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="cart-page">
+        <div class="container">
+            <div class="page-header">
+                <h1>Seu Carrinho</h1>
+                <p>Revise seus produtos antes de finalizar</p>
+            </div>
+
+            <div class="cart-container">
+                <div class="cart-items" id="cart-items">
+                    <!-- Itens do carrinho carregados via JavaScript -->
+                    <div class="empty-cart" id="empty-cart">
+                        <div class="empty-icon">🛒</div>
+                        <h3>Seu carrinho está vazio</h3>
+                        <p>Adicione alguns produtos incríveis!</p>
+                        <a href="produtos.html" class="btn btn-primary">Ver Produtos</a>
+                    </div>
+                </div>
+
+                <div class="cart-summary">
+                    <h3>Resumo do Pedido</h3>
+                    <div class="summary-items">
+                        <div class="summary-item">
+                            <span>Subtotal</span>
+                            <span id="subtotal">R$ 0,00</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Frete</span>
+                            <span id="shipping">R$ 15,00</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Desconto</span>
+                            <span id="discount">- R$ 0,00</span>
+                        </div>
+                        <div class="summary-total">
+                            <span>Total</span>
+                            <span id="total">R$ 15,00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="coupon-section">
+                        <input type="text" id="coupon-code" placeholder="Código do cupom">
+                        <button class="btn btn-outline" id="apply-coupon">Aplicar</button>
+                    </div>
+                    
+                    <a href="checkout.html" class="btn btn-primary btn-full" id="checkout-btn">Finalizar Compra</a>
+                    <a href="produtos.html" class="btn btn-secondary btn-full">Continuar Comprando</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>CRAZY BRO</h3>
+                    <p>Moda autêntica com estilo único.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCartItems();
+            updateCartCount();
+            setupCouponHandler();
+        });
+
+        function loadCartItems() {
+            const cartItems = document.getElementById('cart-items');
+            const emptyCart = document.getElementById('empty-cart');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            
+            const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            if (savedCart.length === 0) {
+                emptyCart.style.display = 'block';
+                checkoutBtn.style.display = 'none';
+                return;
+            }
+            
+            emptyCart.style.display = 'none';
+            checkoutBtn.style.display = 'block';
+            
+            cartItems.innerHTML = '';
+            
+            savedCart.forEach(item => {
+                const cartItem = createCartItemElement(item);
+                cartItems.appendChild(cartItem);
+            });
+            
+            updateCartSummary();
+        }
+
+        function createCartItemElement(item) {
+            const itemElement = document.createElement('div');
+            itemElement.className = 'cart-item';
+            itemElement.innerHTML = `
+                <div class="cart-item-image">
+                    <span>${item.name.charAt(0)}</span>
+                </div>
+                <div class="cart-item-details">
+                    <h4>${item.name}</h4>
+                    <p class="cart-item-price">R$ ${item.price.toFixed(2)}</p>
+                </div>
+                <div class="cart-item-quantity">
+                    <button class="quantity-btn" onclick="decreaseQuantity(${item.id})">-</button>
+                    <span>${item.quantity}</span>
+                    <button class="quantity-btn" onclick="increaseQuantity(${item.id})">+</button>
+                </div>
+                <div class="cart-item-total">
+                    R$ ${(item.price * item.quantity).toFixed(2)}
+                </div>
+                <button class="remove-btn" onclick="removeFromCart(${item.id})">×</button>
+            `;
+            return itemElement;
+        }
+
+        function setupCouponHandler() {
+            document.getElementById('apply-coupon').addEventListener('click', function() {
+                const couponCode = document.getElementById('coupon-code').value;
+                if (couponCode === 'CRAZY10') {
+                    applyDiscount(10);
+                    showNotification('Cupom aplicado! 10% de desconto.', 'success');
+                } else if (couponCode === 'CRAZY20') {
+                    applyDiscount(20);
+                    showNotification('Cupom aplicado! 20% de desconto.', 'success');
+                } else if (couponCode) {
+                    showNotification('Cupom inválido!', 'error');
+                }
+            });
+        }
+
+        function applyDiscount(percentage) {
+            const subtotalElement = document.getElementById('subtotal');
+            const discountElement = document.getElementById('discount');
+            const totalElement = document.getElementById('total');
+            
+            const subtotal = parseFloat(subtotalElement.textContent.replace('R$ ', '').replace(',', '.'));
+            const discount = subtotal * (percentage / 100);
+            const total = subtotal - discount + 15; // + frete
+            
+            discountElement.textContent = `- R$ ${discount.toFixed(2)}`;
+            totalElement.textContent = `R$ ${total.toFixed(2)}`;
+        }
+
+        // Funções globais para manipulação do carrinho
+        window.increaseQuantity = function(productId) {
+            const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
+            const item = savedCart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += 1;
+                localStorage.setItem('cart', JSON.stringify(savedCart));
+                loadCartItems();
+                updateCartCount();
+            }
+        };
+
+        window.decreaseQuantity = function(productId) {
+            const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
+            const itemIndex = savedCart.findIndex(item => item.id === productId);
+            if (itemIndex !== -1) {
+                if (savedCart[itemIndex].quantity > 1) {
+                    savedCart[itemIndex].quantity -= 1;
+                } else {
+                    savedCart.splice(itemIndex, 1);
+                }
+                localStorage.setItem('cart', JSON.stringify(savedCart));
+                loadCartItems();
+                updateCartCount();
+            }
+        };
+
+        window.removeFromCart = function(productId) {
+            const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
+            const filteredCart = savedCart.filter(item => item.id !== productId);
+            localStorage.setItem('cart', JSON.stringify(filteredCart));
+            loadCartItems();
+            updateCartCount();
+        };
+    </script>
+</body>
+</html>

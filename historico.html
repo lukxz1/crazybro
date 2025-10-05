@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Pedidos - Crazy Bro</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">CRAZY BRO</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="produtos.html">Produtos</a></li>
+                    <li><a href="pedidos.html">Meus Pedidos</a></li>
+                    <li><a href="historico.html" class="active">Histórico</a></li>
+                    <li><a href="carrinho.html">Carrinho (<span id="cart-count">0</span>)</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="history-page">
+        <div class="container">
+            <div class="page-header">
+                <h1>Histórico de Pedidos</h1>
+                <p>Veja todo o seu histórico de compras</p>
+            </div>
+
+            <div class="history-filters">
+                <div class="filter-group">
+                    <label for="year-filter">Ano:</label>
+                    <select id="year-filter">
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="status-filter">Status:</label>
+                    <select id="status-filter">
+                        <option value="all">Todos</option>
+                        <option value="delivered">Entregues</option>
+                        <option value="cancelled">Cancelados</option>
+                    </select>
+                </div>
+                <button class="btn btn-outline" onclick="exportHistory()">
+                    📊 Exportar Histórico
+                </button>
+            </div>
+
+            <div class="history-stats">
+                <div class="stat-card">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Pedidos Totais</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">R$ 1.847,50</div>
+                    <div class="stat-label">Total Gasto</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">Pedidos Entregues</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Pedidos Cancelados</div>
+                </div>
+            </div>
+
+            <div class="history-container">
+                <!-- 2023 -->
+                <div class="history-year">
+                    <h2>2023</h2>
+                    
+                    <div class="order-history-card">
+                        <div class="order-header">
+                            <div class="order-info">
+                                <h3>Pedido #CB23128</h3>
+                                <span class="order-date">15/12/2023 - Entregue</span>
+                            </div>
+                            <div class="order-total">R$ 244,70</div>
+                        </div>
+                        <div class="order-items-preview">
+                            <span>Calça Cargo Preta, Camiseta Básica Branca (2x)</span>
+                        </div>
+                        <div class="order-actions">
+                            <button class="btn btn-sm" onclick="viewOrderDetails('CB23128')">
+                                Ver Detalhes
+                            </button>
+                            <button class="btn btn-sm btn-outline" onclick="buyAgain('CB23128')">
+                                Comprar Novamente
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="order-history-card">
+                        <div class="order-header">
+                            <div class="order-info">
+                                <h3>Pedido #CB23115</h3>
+                                <span class="order-date">10/12/2023 - Entregue</span>
+                            </div>
+                            <div class="order-total">R$ 189,90</div>
+                        </div>
+                        <div class="order-items-preview">
+                            <span>Jaqueta Jeans Destroyed</span>
+                        </div>
+                        <div class="order-actions">
+                            <button class="btn btn-sm" onclick="viewOrderDetails('CB23115')">
+                                Ver Detalhes
+                            </button>
+                            <button class="btn btn-sm btn-outline" onclick="buyAgain('CB23115')">
+                                Comprar Novamente
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="order-history-card cancelled">
+                        <div class="order-header">
+                            <div class="order-info">
+                                <h3>Pedido #CB23089</h3>
+                                <span class="order-date">05/12/2023 - Cancelado</span>
+                            </div>
+                            <div class="order-total">R$ 119,90</div>
+                        </div>
+                        <div class="order-items-preview">
+                            <span>Moletom com Capuz</span>
+                        </div>
+                        <div class="cancel-reason">
+                            <strong>Motivo do cancelamento:</strong> Mudança de endereço
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2022 -->
+                <div class="history-year">
+                    <h2>2022</h2>
+                    
+                    <div class="order-history-card">
+                        <div class="order-header">
+                            <div class="order-info">
+                                <h3>Pedido #CB22142</h3>
+                                <span class="order-date">20/11/2022 - Entregue</span>
+                            </div>
+                            <div class="order-total">R$ 328,70</div>
+                        </div>
+                        <div class="order-items-preview">
+                            <span>Vestido Midi Floral, Tênis Casual Couro</span>
+                        </div>
+                    </div>
+
+                    <div class="order-history-card">
+                        <div class="order-header">
+                            <div class="order-info">
+                                <h3>Pedido #CB22087</h3>
+                                <span class="order-date">15/08/2022 - Entregue</span>
+                            </div>
+                            <div class="order-total">R$ 174,80</div>
+                        </div>
+                        <div class="order-items-preview">
+                            <span>Bermuda Tactel, Boné Trucker</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pagination">
+                <button class="btn btn-outline">← Anterior</button>
+                <span class="page-info">Página 1 de 2</span>
+                <button class="btn btn-outline">Próxima →</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>CRAZY BRO</h3>
+                    <p>Sua loja de moda preferida</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Crazy Bro. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Funções específicas para a página de histórico
+        function viewOrderDetails(orderId) {
+            showNotification(`Carregando detalhes do pedido ${orderId}...`, 'success');
+            // Aqui iria a lógica para mostrar modal com detalhes
+        }
+
+        function exportHistory() {
+            showNotification('Exportando histórico de pedidos...', 'success');
+            // Aqui iria a lógica de exportação para PDF/Excel
+        }
+
+        function buyAgain(orderId) {
+            showNotification('Itens do pedido adicionados ao carrinho!', 'success');
+            // Aqui iria a lógica de adicionar itens ao carrinho
+        }
+
+        // Filtros
+        document.getElementById('year-filter').addEventListener('change', filterHistory);
+        document.getElementById('status-filter').addEventListener('change', filterHistory);
+
+        function filterHistory() {
+            const year = document.getElementById('year-filter').value;
+            const status = document.getElementById('status-filter').value;
+            
+            showNotification(`Filtrando: ${year} - ${status}`, 'success');
+            // Aqui iria a lógica real de filtragem
+        }
+
+        // Atualizar contador do carrinho
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>
